@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #coralbg {
+            /* width: 70%;
+            height: 540px; */
+            background-color: coral;
+            position: relative;
+            text-decoration: none;
+        }
+
+        #redbg {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            cursor: pointer;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        button {
+            margin: 20px;
+            padding: 10px;
+            height: auto;
+            width: auto;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="coralbg"></div>
+    <div id="redbg"></div>
+    <button onclick="game(1000)">Start</button>
+    <button onclick="location.reload()">Restart</button>
+    <button id="speedbtn" onclick="increase()">Increase Speed</button>
+    <button id="speedbtndec" onclick="decrease()">Decrease Speed</button>
+    <p>Block Co-ordinates: <span id="text"></span></p>
+    <!-- <p>Mouse Clicked Co-ordinates: <span id="demo"></span></p> -->
+    <p>Counter: <span id="count"></span></p>
+    <p>High Score: <span id="hscount"></span></p>
+    <p>Timer: <span id="time"></span></p>
+
+
+    <script>
+        var counter = 0;
+        var hs=0;
+        var countid = document.getElementById('count');
+        var textid = document.getElementById('text');
+        var redElm = document.getElementById('redbg');
+        var texted = document.getElementById('text');
+        var coralid = document.getElementById('coralbg');
+        var timeid = document.getElementById('time');
+
+        var gametime = prompt('Enter the game time: ');
+        var anim;
+        var timer = 1000;
+
+        function increase() {
+            timer -= 500;
+            timeid.innerHTML = timer;
+            clearInterval(anim);
+            game(timer);
+        };
+
+        function decrease() {
+            timer += 1000;
+            timeid.innerHTML = timer;
+            clearInterval(anim);
+            game(timer);
+        }
+
+        function getRndWidth(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        };
+
+        function getRndHeight(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        };
+
+
+        function game(timer) {
+            timeid.innerHTML = timer;
+            anim = setInterval(animate, timer);
+            setTimeout(function () {
+                // clearInterval(anim);
+                hs=counter;
+                hscount.innerHTML=hs;
+                if (counter >= 2) {
+                alert('Congratulation, You Won !!!');}
+                else{
+                alert('Game Over'+'\r\n'+'Retry');}
+                counter=0;
+                count.innerHTML = counter;
+                clearInterval(anim);
+                // location.reload();
+                // redElm.disable=true;
+            }, parseInt(gametime) * 1000);
+            // console.log(anim);
+
+            function animate() {
+                poew = getRndWidth(0, 1334);
+                poeh = getRndHeight(0, 530);
+                textid.innerHTML = poew + ' , ' + poeh;
+                redElm.style.left = poew + 'px';
+                redElm.style.top = poeh + 'px';
+            }
+        };
+
+        redElm.onclick = function () {
+            counter++;
+            count.innerHTML = counter;
+            // if (counter == 5) {
+            //     alert('Congratulation, You Won !!!');
+            //     hs=counter;
+            //     hscount.innerHTML=hs;
+            //     counter=0;
+            //     count.innerHTML = counter;
+            //     // location.reload();
+            //     // redElm.disable=true;
+            //     clearInterval(anim)
+            // }
+        };
+
+        // coralid.onclick = function () {
+        //     counter = 0;
+        //     count.innerHTML = counter;
+        // };
+
+
+
+    </script>
+</body>
+
+</html>
